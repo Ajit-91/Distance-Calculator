@@ -6,6 +6,14 @@ import Controls from "./Controls";
 
 export default () => {
   const [directions, setDirections] = useState(null);
+  const [origin, setOrigin] = useState(null);
+  const [destination, setDestination] = useState(null);
+  const [stops, setStops] = useState([{
+      location: "",
+      stopover: true,
+  }]);
+
+
   const mapAPi = useMemo(() => {
     return {
       googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY,
@@ -21,10 +29,23 @@ export default () => {
           <>
             <div className="flex flex-col-reverse md:flex-row h-screen">
               <div className="w-full md:w-1/2 px-2">
-                <Controls setDirections={setDirections} />
+                <Controls 
+                  setDirections={setDirections} 
+                  origin={origin}
+                  setOrigin={setOrigin}
+                  destination={destination}
+                  setDestination={setDestination}
+                  stops={stops}
+                  setStops={setStops}
+                />
               </div>
               <div className="w-full md:w-1/2 px-2">
-                <Map directions={directions} />
+                <Map 
+                  directions={directions}
+                  origin={origin}
+                  destination={destination}
+                  stops={stops}
+                 />
               </div>
             </div>
           </>
