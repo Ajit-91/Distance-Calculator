@@ -52,7 +52,7 @@ const Controls = ({ setDirections, origin, setOrigin, destination, setDestinatio
     return (
         <div className='h-full'>
 
-            <div className='flex flex-col md:flex-row md:gap-3 justify-center md:justify-between'>
+            <div className='flex flex-col md:flex-row md:space-x-3 space-y-4 justify-center md:justify-between'>
                 <div className='w-full md:w-1/2'>
                     <SearchInput setPlace={setOrigin} label={"Origin"} />
         
@@ -68,7 +68,7 @@ const Controls = ({ setDirections, origin, setOrigin, destination, setDestinatio
                     </button>
                     <SearchInput setPlace={setDestination} label={"Destination"} />
                 </div>
-                <div className='w-full md:w-1/2 flex justify-end items-center'>
+                <div className='w-full md:w-1/2 flex md:justify-end justify-center items-center'>
                     <button className='rounded-full bg-blue px-7 py-4 text-white' onClick={calculateRoute}>Calculate</button>
                 </div>
             </div>

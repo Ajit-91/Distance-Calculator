@@ -28,8 +28,10 @@ export default () => {
       {isLoaded ?
         (
           <div className="bg-gray-1 py-5 min-h-screen">
-            <p className="text-2xl text-center text-blue mb-2">Let's calculate <span className="font-bold">distance</span> from Google maps</p>
-            <div className="flex flex-col-reverse md:flex-row  md:space-x-5 space-y-5">
+            <p className="text-2xl text-center text-blue mb-2">
+              Let's calculate <span className="font-bold">distance</span> from Google maps
+            </p>
+            <div className="flex flex-col-reverse md:flex-row  md:space-x-5 space-y-5 space-y-reverse">
               <div className="w-full md:w-1/2 px-8 ">
                 <Controls 
                   setDirections={setDirections} 
