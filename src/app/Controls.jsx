@@ -4,25 +4,28 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCirclePlus } from '@fortawesome/free-solid-svg-icons'
 import React, { useState } from 'react'
 
-const Controls = ({ setDirections, origin, setOrigin, destination, setDestination, stops, setStops }) => {
+const Controls = ({ setDirections, origin, setOrigin, destination, setDestination, stops, setStops, setReload }) => {
 
     const [distance, setDistance] = useState(null);
 
 
     const calculateRoute = async () => {
         if (!origin || !destination) return;
+
         try {
             const directionsService = new window.google.maps.DirectionsService();
-            console.log({ origin, destination })
+
             const request = {
                 origin,
                 destination,
                 optimizeWaypoints: true,
                 travelMode: google.maps.TravelMode.DRIVING,
             }
-            if(stops[stops.length-1].request){
+            // if last stop is not empty, add all stops to request because if last stop is not empty then it means no stop is empty
+            if(stops[stops.length - 1].location){
                 request.waypoints = stops
             }else{
+                // if last stop is empty, add all stops except last stop to request
                 request.waypoints = stops.slice(0, stops.length-1)
             }
             console.log({request})
@@ -31,7 +34,7 @@ const Controls = ({ setDirections, origin, setOrigin, destination, setDestinatio
             setDistance(response.routes[0].legs[0].distance.text);
         } catch (error) {
             console.error("Error fetching directions", error);
-            window.alert(error.message)
+            if(error.code === "ZERO_RESULTS")  window.alert("No route found")
         }
     }
 
@@ -55,7 +58,7 @@ const Controls = ({ setDirections, origin, setOrigin, destination, setDestinatio
                     <br />
                     {stops.map((_, index) => (
                         <div key={index} className='mb-2'>
-                            <SearchInput setPlace={setStops} label={"Stop"} id={index} />
+                            <SearchInput setPlace={setStops} label={"Stop"} id={index} setReload={setReload} />
                         </div>
                     ))}
                     <button onClick={addStop}>

@@ -8,6 +8,7 @@ export default () => {
   const [directions, setDirections] = useState(null);
   const [origin, setOrigin] = useState(null);
   const [destination, setDestination] = useState(null);
+  const [reload, setReload] = useState(false); 
   const [stops, setStops] = useState([{
       location: "",
       stopover: true,
@@ -37,6 +38,7 @@ export default () => {
                   setDestination={setDestination}
                   stops={stops}
                   setStops={setStops}
+                  setReload={setReload}
                 />
               </div>
               <div className="w-full md:w-1/2 px-2">
@@ -45,6 +47,7 @@ export default () => {
                   origin={origin}
                   destination={destination}
                   stops={stops}
+                  reload={reload}
                  />
               </div>
             </div>

@@ -4,7 +4,11 @@ import { GoogleMap, DirectionsRenderer, Marker } from "@react-google-maps/api";
 
 const Map = ({ directions, origin, destination, stops }) => {
 
-  const center = useMemo(() => ({ lat: 41.85, lng: -87.65 }), []);
+  const center = useMemo(() => {
+    if (!origin) return { lat: 0, lng: 0 };
+    return origin;
+  }, [origin]);
+  
   console.log({ origin, destination, stops })
 
   return (
@@ -14,41 +18,43 @@ const Map = ({ directions, origin, destination, stops }) => {
         zoom={2}
         center={center}
       >
-    
+
         <Marker
           position={origin}
           icon={{
             path: window.google.maps.SymbolPath.CIRCLE,
-            fillColor : "#32CD32",
+            fillColor: "#32CD32",
             fillOpacity: 1,
-            strokeColor : "#2E2E2E",
+            strokeColor: "#2E2E2E",
             strokeOpacity: 1,
             strokeWeight: 1,
             scale: 7
           }}
         />
 
-        {stops[0].location && stops.map((stop, index) => (
-          <Marker
-            key={index}
-            position={stop.location}
-            icon={{
-              path: window.google.maps.SymbolPath.CIRCLE,
-              scale : 7
-            }}
-          />
-        ))}
+        {stops[0].location && stops.map((stop, index) => {
+            if (stop.location) return (
+              <Marker
+                key={index}
+                position={stop.location}
+                icon={{
+                  path: window.google.maps.SymbolPath.CIRCLE,
+                  scale: 7
+                }}
+              />
+            )
+          })}
 
         <Marker
           position={destination}
         />
 
-        {directions && <DirectionsRenderer 
+        {directions && <DirectionsRenderer
           directions={directions}
           options={{
             suppressMarkers: true,
           }}
-          />}
+        />}
       </GoogleMap>
     </div>
   );

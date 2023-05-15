@@ -4,7 +4,7 @@ import { Autocomplete } from '@react-google-maps/api'
 import React, { useRef, useState } from 'react'
 import styles from '@/styles/controls.module.css'
 
-const SearchInput = ({ setPlace, label, id }) => {
+const SearchInput = ({ setPlace, label, id, setReload }) => {
     const [autocomplete, setAutocomplete] = useState(null);
     const ref = useRef(null)
 
@@ -28,6 +28,7 @@ const SearchInput = ({ setPlace, label, id }) => {
                             return place;
                         }
                     });
+                    if (setReload) setReload((prev) => !prev);
                 }}
             >
                 <>
