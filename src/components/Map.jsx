@@ -12,7 +12,6 @@ const Map = ({ directions, origin, destination, stops }) => {
   console.log({ origin, destination, stops })
 
   return (
-    // <div style={{ width: '100%', height: '100%' }}>
     <GoogleMap
       mapContainerStyle={{ height: "100%", width: "100%" }}
       zoom={2}
@@ -65,7 +64,6 @@ const Map = ({ directions, origin, destination, stops }) => {
         }}
       />}
     </GoogleMap>
-    // {/* </div> */}
   );
 };
 

@@ -94,7 +94,7 @@ const Controls = ({ setDirections, origin, setOrigin, destination, setDestinatio
                         <span className='font-bold'>{origin?.name}</span> and {" "}
                         <span className='font-bold'>{destination?.name}</span> {" "}
                         via the seleted route is {" "}
-                        <span className='font-bold'>{distance} Kms</span>
+                        <span className='font-bold'>{distance}</span>
                     </p>
                 </div>
             </div>

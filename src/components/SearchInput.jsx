@@ -15,12 +15,10 @@ const SearchInput = ({ setPlace, label, id, setReload }) => {
                     setAutocomplete(autocomplete);
                 }}
                 onPlaceChanged={() => {
-                    console.log("place changed");
                     const value = ref.current.value;
                     if (!autocomplete || !value) return;
 
                     const place = getLetLng(autocomplete.getPlace());
-                    console.log({ place, autocomplete })
                     if(!place || !place?.lat || !place?.lng){
                         ref.current.value = "";
                         return window.alert("Please select a valid place")

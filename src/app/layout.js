@@ -18,7 +18,10 @@ export default function RootLayout({ children }) {
       </Head>
       <body className={inter.className}>
           <Navbar />
+          <div className='bg-gray-1 py-5 min-h-screen'>
+
         {children}
+          </div>
         </body>
     </html>
   )
