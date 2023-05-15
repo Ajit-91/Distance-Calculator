@@ -6,25 +6,27 @@ const Map = ({ directions, origin, destination, stops }) => {
 
   const center = useMemo(() => {
     if (!origin) return { lat: 0, lng: 0 };
-    return origin;
+    return origin.latLong;
   }, [origin]);
 
   console.log({ origin, destination, stops })
 
   return (
     // <div style={{ width: '100%', height: '100%' }}>
-      <GoogleMap
-        mapContainerStyle={{ height: "100%", width: "100%" }}
-        zoom={2}
-        center={center}
-        options={{
-          streetViewControl: false,
-          mapTypeControl: false,
-        }}
-      >
+    <GoogleMap
+      mapContainerStyle={{ height: "100%", width: "100%" }}
+      zoom={2}
+      center={center}
+      options={{
+        streetViewControl: false,
+        mapTypeControl: false,
+        zoomControl: false,
+      }}
+    >
 
+      {origin && (
         <Marker
-          position={origin}
+          position={origin.latLong}
           icon={{
             path: window.google.maps.SymbolPath.CIRCLE,
             fillColor: "#32CD32",
@@ -35,31 +37,34 @@ const Map = ({ directions, origin, destination, stops }) => {
             scale: 7
           }}
         />
+      )}
 
-        {stops[0].location && stops.map((stop, index) => {
-            if (stop.location) return (
-              <Marker
-                key={index}
-                position={stop.location}
-                icon={{
-                  path: window.google.maps.SymbolPath.CIRCLE,
-                  scale: 7
-                }}
-              />
-            )
-          })}
+      {stops[0].location && stops.map((stop, index) => {
+        if (stop.location) return (
+          <Marker
+            key={index}
+            position={stop.location}
+            icon={{
+              path: window.google.maps.SymbolPath.CIRCLE,
+              scale: 7
+            }}
+          />
+        )
+      })}
 
+      {destination && (
         <Marker
-          position={destination}
+          position={destination.latLong}
         />
+      )}
 
-        {directions && <DirectionsRenderer
-          directions={directions}
-          options={{
-            suppressMarkers: true,
-          }}
-        />}
-      </GoogleMap>
+      {directions && <DirectionsRenderer
+        directions={directions}
+        options={{
+          suppressMarkers: true,
+        }}
+      />}
+    </GoogleMap>
     // {/* </div> */}
   );
 };

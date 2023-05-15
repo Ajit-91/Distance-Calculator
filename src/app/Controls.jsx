@@ -16,25 +16,26 @@ const Controls = ({ setDirections, origin, setOrigin, destination, setDestinatio
             const directionsService = new window.google.maps.DirectionsService();
 
             const request = {
-                origin,
-                destination,
+                origin: origin.latLong,
+                destination: destination.latLong,
                 optimizeWaypoints: true,
                 travelMode: google.maps.TravelMode.DRIVING,
             }
             // if last stop is not empty, add all stops to request because if last stop is not empty then it means no stop is empty
-            if(stops[stops.length - 1].location){
+            if (stops[stops.length - 1].location) {
                 request.waypoints = stops
-            }else{
+            } else {
                 // if last stop is empty, add all stops except last stop to request
-                request.waypoints = stops.slice(0, stops.length-1)
+                request.waypoints = stops.slice(0, stops.length - 1)
             }
-            console.log({request})
+            console.log({ request })
             const response = await directionsService.route(request);
+            console.log({ response })
             setDirections(response);
             setDistance(response.routes[0].legs[0].distance.text);
         } catch (error) {
             console.error("Error fetching directions", error);
-            if(error.code === "ZERO_RESULTS")  window.alert("No route found")
+            if (error.code === "ZERO_RESULTS") window.alert("No route found")
         }
     }
 
@@ -55,7 +56,7 @@ const Controls = ({ setDirections, origin, setOrigin, destination, setDestinatio
             <div className='flex flex-col md:flex-row md:space-x-3 space-y-4 justify-center md:justify-between'>
                 <div className='w-full md:w-1/2'>
                     <SearchInput setPlace={setOrigin} label={"Origin"} />
-        
+
                     {stops.map((_, index) => (
                         <div key={index} className='mt-5'>
                             <SearchInput setPlace={setStops} label={"Stop"} id={index} setReload={setReload} />
@@ -73,16 +74,24 @@ const Controls = ({ setDirections, origin, setOrigin, destination, setDestinatio
                 </div>
             </div>
 
-            <div className='rounded-full mt-10 w-full'>
+            {distance && (
+                <div className='rounded-lg mt-10 w-full'>
                 <div className='flex justify-between bg-white px-7 py-5'>
                     <h3 className='text-2xl font-bold'>Distance</h3>
-                    <h3 className='text-2xl font-bold text-sky'>{distance || 1147}</h3>
+                    <h3 className='text-2xl font-bold text-sky'>{distance}</h3>
                 </div>
 
                 <div className='bg-gray-3 px-7 py-5'>
-                        <p>The distance between Mumbai and Delhi via the seleted route is {distance}.</p>
+                    <p>
+                        The distance between {" "}
+                        <span className='font-bold'>{origin?.name}</span> and {" "}
+                        <span className='font-bold'>{destination?.name}</span> {" "}
+                        via the seleted route is {" "}
+                        <span className='font-bold'>{distance}</span>
+                    </p>
                 </div>
             </div>
+            )}
         </div>
     )
 }

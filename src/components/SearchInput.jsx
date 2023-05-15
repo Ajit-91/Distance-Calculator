@@ -19,13 +19,21 @@ const SearchInput = ({ setPlace, label, id, setReload }) => {
                     const value = ref.current.value;
                     if (!autocomplete || !value) return;
 
+                    const place = getLetLng(autocomplete.getPlace());
+                    console.log({ place, autocomplete })
+                    if(!place || !place?.lat || !place?.lng){
+                        ref.current.value = "";
+                        return window.alert("Please select a valid place")
+                    }
                     setPlace((prev) => {
-                        const place = getLetLng(autocomplete.getPlace());
                         if (Array.isArray(prev)) {
                             prev[id].location = place;
                             return prev;
                         } else {
-                            return place;
+                            return {
+                                name : value,
+                                latLong : place
+                            };
                         }
                     });
                     if (setReload) setReload((prev) => !prev);
