@@ -3,6 +3,7 @@ import SearchInput from '@/components/SearchInput';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCirclePlus } from '@fortawesome/free-solid-svg-icons'
 import React, { useState } from 'react'
+import formatDistance from '@/utils/formatDistance';
 
 const Controls = ({ setDirections, origin, setOrigin, destination, setDestination, stops, setStops, setReload }) => {
 
@@ -31,8 +32,14 @@ const Controls = ({ setDirections, origin, setOrigin, destination, setDestinatio
             console.log({ request })
             const response = await directionsService.route(request);
             console.log({ response })
-            setDirections(response);
-            setDistance(response.routes[0].legs[0].distance.text);
+            setDirections(response); 
+            setDistance(() => {
+                let total = 0;
+                response.routes[0].legs.forEach(leg => {
+                    total += leg.distance.value
+                })
+                return formatDistance(total)
+            });
         } catch (error) {
             console.error("Error fetching directions", error);
             if (error.code === "ZERO_RESULTS") window.alert("No route found")
@@ -87,7 +94,7 @@ const Controls = ({ setDirections, origin, setOrigin, destination, setDestinatio
                         <span className='font-bold'>{origin?.name}</span> and {" "}
                         <span className='font-bold'>{destination?.name}</span> {" "}
                         via the seleted route is {" "}
-                        <span className='font-bold'>{distance}</span>
+                        <span className='font-bold'>{distance} Kms</span>
                     </p>
                 </div>
             </div>
