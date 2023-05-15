@@ -27,9 +27,10 @@ export default () => {
     <>
       {isLoaded ?
         (
-          <>
-            <div className="flex flex-col-reverse md:flex-row h-screen">
-              <div className="w-full md:w-1/2 px-2">
+          <div className="bg-gray-1 py-5 min-h-screen">
+            <p className="text-2xl text-center text-blue mb-2">Let's calculate <span className="font-bold">distance</span> from Google maps</p>
+            <div className="flex flex-col-reverse md:flex-row  md:space-x-5 space-y-5">
+              <div className="w-full md:w-1/2 px-8 ">
                 <Controls 
                   setDirections={setDirections} 
                   origin={origin}
@@ -41,7 +42,7 @@ export default () => {
                   setReload={setReload}
                 />
               </div>
-              <div className="w-full md:w-1/2 px-2">
+              <div className="w-full md:w-1/2 px-8" style={{height : 480}}>
                 <Map 
                   directions={directions}
                   origin={origin}
@@ -51,7 +52,7 @@ export default () => {
                  />
               </div>
             </div>
-          </>
+          </div>
         )
         : (
           <>

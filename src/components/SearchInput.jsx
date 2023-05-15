@@ -33,7 +33,7 @@ const SearchInput = ({ setPlace, label, id, setReload }) => {
             >
                 <>
                     <p>{label}</p>
-                    <input ref={ref} type="text" id='search' className={`${styles.input} px-3 py-2`} />
+                    <input ref={ref} type="text" id='search' className={`${styles.input} px-3 py-2 w-full`} />
                 </>
             </Autocomplete>
         </div>

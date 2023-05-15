@@ -50,29 +50,39 @@ const Controls = ({ setDirections, origin, setOrigin, destination, setDestinatio
     }
 
     return (
-        <div className='h-full flex flex-col justify-center content-center'>
+        <div className='h-full'>
 
-            <div className='flex flex-col md:flex-row justify-between'>
-                <div className=''>
+            <div className='flex flex-col md:flex-row md:gap-3 justify-center md:justify-between'>
+                <div className='w-full md:w-1/2'>
                     <SearchInput setPlace={setOrigin} label={"Origin"} />
-                    <br />
+        
                     {stops.map((_, index) => (
-                        <div key={index} className='mb-2'>
+                        <div key={index} className='mt-5'>
                             <SearchInput setPlace={setStops} label={"Stop"} id={index} setReload={setReload} />
                         </div>
                     ))}
-                    <button onClick={addStop}>
+
+                    <button onClick={addStop} className='block ml-auto mt-1'>
                         <FontAwesomeIcon icon={faCirclePlus} />
                         <span className='ml-2'>Add Stop</span>
                     </button>
                     <SearchInput setPlace={setDestination} label={"Destination"} />
                 </div>
-                <div className=''>
-                    <button className='rounded-full bg-[blue] p-3 text-white' onClick={calculateRoute}>Calculate Route</button>
+                <div className='w-full md:w-1/2 flex justify-end items-center'>
+                    <button className='rounded-full bg-blue px-7 py-4 text-white' onClick={calculateRoute}>Calculate</button>
                 </div>
             </div>
 
-            <div>Distance: {distance}</div>
+            <div className='rounded-full mt-10 w-full'>
+                <div className='flex justify-between bg-white px-7 py-5'>
+                    <h3 className='text-2xl font-bold'>Distance</h3>
+                    <h3 className='text-2xl font-bold text-sky'>{distance || 1147}</h3>
+                </div>
+
+                <div className='bg-gray-3 px-7 py-5'>
+                        <p>The distance between Mumbai and Delhi via the seleted route is {distance}.</p>
+                </div>
+            </div>
         </div>
     )
 }
